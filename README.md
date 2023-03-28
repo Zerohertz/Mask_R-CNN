@@ -3,6 +3,8 @@
 Mask R-CNN?
 </summary>
 
+</br>
+
 Mask R-CNN은 Faster R-CNN에 Segmentation 네트워크를 추가한 딥러닝 알고리즘으로, 객체 검출 (Object detection)과 분할을 모두 수행할 수 있습니다.
 
 기존 Faster R-CNN은 RPN (Region Proposal Network)을 사용하여 객체의 경계 상자 (Bounding box)를 추출하고, 추출된 경계 상자를 입력으로 사용하여 객체 인식을 수행합니다. 이러한 방식은 객체의 위치와 클래스 정보를 검출할 수 있지만, 객체 내부의 픽셀-레벨 Segmentation 정보는 제공하지 않습니다.
@@ -20,6 +22,8 @@ Mask R-CNN은 객체 검출과 분할 작업에서 매우 강력한 성능을 �
 Mask R-CNN vs. YOLO Segmentation
 </summary>
 
+</br>
+
 Mask R-CNN은 정확한 객체 위치 검출과 객체의 픽셀-레벨 인식을 모두 수행할 수 있는 Segmentation 네트워크를 추가한 것입니다. 따라서 Mask R-CNN은 객체 검출 및 분할 작업에서 매우 강력한 성능을 보여줍니다.
 
 반면, YOLO Segmentation은 객체 인식에 대한 빠른 실행 속도를 중점으로 둔다는 점에서 Mask R-CNN과 차이가 있습니다. YOLO Segmentation은 이미지를 여러 그리드 셀로 분할하고, 각 그리드 셀에 대한 객체의 확률, 위치 및 클래스 정보를 동시에 예측합니다. 이는 매우 빠른 속도로 객체 인식을 수행할 수 있도록 합니다.
@@ -34,6 +38,8 @@ Mask R-CNN은 정확한 객체 위치 검출과 객체의 픽셀-레벨 인식�
 <summary>
 Non-Maximum Suppression (NMS)
 </summary>
+
+</br>
 
 > 객체 검출에서 중복된 바운딩 박스를 제거하는 기술
 
@@ -55,6 +61,8 @@ NMS는 다음과 같은 절차로 동작합니다.
 <summary>
 Reference
 </summary>
+
+</br>
 
 1. [PyTorch](https://tutorials.pytorch.kr/intermediate/torchvision_tutorial.html)
 2. [pytorch-mask-rcnn](https://github.com/multimodallearning/pytorch-mask-rcnn)
