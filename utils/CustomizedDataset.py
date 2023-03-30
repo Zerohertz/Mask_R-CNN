@@ -32,7 +32,7 @@ class CustomizedDataset(torch.utils.data.Dataset):
         num_objs = len(obj_ids)
         boxes = []
         for i in range(num_objs):
-            pos = np.where(masks[0])
+            pos = np.where(masks[i])
             xmin = np.min(pos[1])
             xmax = np.max(pos[1])
             ymin = np.min(pos[0])
