@@ -4,10 +4,15 @@
 
 ```shell
 ├── data
+│   ├── ISBI2016_ISIC_Part3B_Test_Data
+│   │   ├── ISIC_0000003.jpg
+│   │   ├── ISIC_0000003_Segmentation.png
+│   │   └── ...
 │   ├── ISBI2016_ISIC_Part3B_Training_Data
 │   │   ├── ISIC_0000000.jpg
 │   │   ├── ISIC_0000000_Segmentation.png
 │   │   └── ...
+│   ├── ISBI2016_ISIC_Part3B_Test_GroundTruth.csv
 │   ├── ISBI2016_ISIC_Part3B_Training_GroundTruth.csv
 │   └── saveData.py
 └── Mask_R-CNN
@@ -50,6 +55,20 @@ def saveData(target, ImgDir, MaskDir, label):
 if __name__ == "__main__":
     ImgDir, MaskDir = initializeData('TrainingData')
     target = 'ISBI2016_ISIC_Part3B_Training_Data'
+    GT = pd.read_csv(target.replace('Data', 'GroundTruth.csv'), header=None, index_col=0)
+    enc = {}
+    for i, j in enumerate(GT[1].unique()):
+        enc[j] = i + 1
+    print('='*10, enc, '='*10)
+
+    os.chdir(target)
+    for tmp in os.listdir():
+        if (not ('_Segmentation' in tmp)) and ('.jpg' in tmp):
+            saveData(tmp, ImgDir, MaskDir, enc[GT.loc[tmp[:-4], 1]])
+
+    os.chdir('..')
+    ImgDir, MaskDir = initializeData('TestData')
+    target = 'ISBI2016_ISIC_Part3B_Test_Data'
     GT = pd.read_csv(target.replace('Data', 'GroundTruth.csv'), header=None, index_col=0)
     enc = {}
     for i, j in enumerate(GT[1].unique()):
