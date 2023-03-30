@@ -1,16 +1,17 @@
 # Used Data
 
-[ISIC 2016 Challenge - Task 3B: Segmented Lesion Classification](https://challenge.isic-archive.com/landing/2016/41/)
+> [ISIC 2016 Challenge - Task 3B: Segmented Lesion Classification](https://challenge.isic-archive.com/landing/2016/41/)
 
 ```shell
-├── ISBI2016_ISIC_Part3B_Training_Data
-│   ├── ISIC_0000000.jpg
-│   ├── ISIC_0000000_Segmentation.png
-│   └── ...
-├── ISBI2016_ISIC_Part3B_Training_GroundTruth.csv
-└── saveData.py
+├── data
+│   ├── ISBI2016_ISIC_Part3B_Training_Data
+│   │   ├── ISIC_0000000.jpg
+│   │   ├── ISIC_0000000_Segmentation.png
+│   │   └── ...
+│   ├── ISBI2016_ISIC_Part3B_Training_GroundTruth.csv
+│   └── saveData.py
+└── Mask_R-CNN
 ```
-
 
 <details>
 <summary>
@@ -62,6 +63,12 @@ if __name__ == "__main__":
 ```
 
 </details>
+
+# Train
+
+```shell
+Parent/Mask_R-CNN$ python train.py
+```
 
 ---
 
