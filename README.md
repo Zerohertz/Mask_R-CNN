@@ -89,6 +89,12 @@ if __name__ == "__main__":
 Parent/Mask_R-CNN$ python train.py
 ```
 
+# Test
+
+```shell
+Parent/Mask_R-CNN$ python test.py
+```
+
 ---
 
 <details>
