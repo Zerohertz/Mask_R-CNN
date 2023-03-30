@@ -1,3 +1,109 @@
+# Used Data
+
+> [ISIC 2016 Challenge - Task 3B: Segmented Lesion Classification](https://challenge.isic-archive.com/landing/2016/41/)
+
+```shell
+├── data
+│   ├── ISBI2016_ISIC_Part3B_Test_Data
+│   │   ├── ISIC_0000003.jpg
+│   │   ├── ISIC_0000003_Segmentation.png
+│   │   └── ...
+│   ├── ISBI2016_ISIC_Part3B_Training_Data
+│   │   ├── ISIC_0000000.jpg
+│   │   ├── ISIC_0000000_Segmentation.png
+│   │   └── ...
+│   ├── ISBI2016_ISIC_Part3B_Test_GroundTruth.csv
+│   ├── ISBI2016_ISIC_Part3B_Training_GroundTruth.csv
+│   └── saveData.py
+└── Mask_R-CNN
+```
+
+<details>
+<summary>
+saveData.py
+</summary>
+
+</br>
+
+```python
+import os
+import shutil
+
+import cv2
+import pandas as pd
+
+
+def initializeData(DataStoreName):
+    tmp = os.getcwd()
+    if DataStoreName in os.listdir():
+        shutil.rmtree(DataStoreName)
+    os.mkdir(DataStoreName)
+    os.chdir(DataStoreName)
+    os.mkdir('images')
+    os.mkdir('masks')
+    os.chdir(tmp)
+    return (tmp + '/' + DataStoreName + '/' + 'images/', tmp + '/' + DataStoreName + '/' + 'masks/')
+
+def saveData(target, ImgDir, MaskDir, label):
+    # Make Target Data: IMG
+    shutil.copy(target, ImgDir + target)
+    # Make Target Data: Mask (GT)
+    mask = cv2.imread(target.replace('.jpg', '_Segmentation.png'), cv2.IMREAD_UNCHANGED)
+    mask[mask == 255] = label
+    cv2.imwrite(MaskDir + target.replace('jpg', 'png'), mask)
+
+if __name__ == "__main__":
+    ImgDir, MaskDir = initializeData('TrainingData')
+    target = 'ISBI2016_ISIC_Part3B_Training_Data'
+    GT = pd.read_csv(target.replace('Data', 'GroundTruth.csv'), header=None, index_col=0)
+    enc = {}
+    for i, j in enumerate(GT[1].unique()):
+        enc[j] = i + 1
+    print('='*10, enc, '='*10)
+
+    os.chdir(target)
+    for tmp in os.listdir():
+        if (not ('_Segmentation' in tmp)) and ('.jpg' in tmp):
+            saveData(tmp, ImgDir, MaskDir, enc[GT.loc[tmp[:-4], 1]])
+
+    os.chdir('..')
+    ImgDir, MaskDir = initializeData('TestData')
+    target = 'ISBI2016_ISIC_Part3B_Test_Data'
+    GT = pd.read_csv(target.replace('Data', 'GroundTruth.csv'), header=None, index_col=0)
+    enc = {}
+    for i, j in enumerate(GT[1].unique()):
+        enc[j] = i + 1
+    print('='*10, enc, '='*10)
+
+    os.chdir(target)
+    for tmp in os.listdir():
+        if (not ('_Segmentation' in tmp)) and ('.jpg' in tmp):
+            saveData(tmp, ImgDir, MaskDir, enc[GT.loc[tmp[:-4], 1]])
+```
+
+</details>
+
+# Train
+
+```shell
+Parent/Mask_R-CNN$ python train.py
+```
+
+# Test
+
+```shell
+Parent/Mask_R-CNN$ python test.py
+```
+
+---
+
+<details>
+<summary>
+Supplementary Data
+</summary>
+
+</br>
+
 <details>
 <summary>
 Mask R-CNN?
@@ -55,8 +161,6 @@ NMS는 다음과 같은 절차로 동작합니다.
 
 </details>
 
----
-
 <details>
 <summary>
 Reference
@@ -69,4 +173,5 @@ Reference
 3. [Detectron2](https://github.com/facebookresearch/detectron2)
    + [Train MaskRCNN on custom dataset with Detectron2 in 4 steps](https://towardsdatascience.com/train-maskrcnn-on-custom-dataset-with-detectron2-in-4-steps-5887a6aa135d)
 
+</details>
 </details>
