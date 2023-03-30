@@ -3,6 +3,15 @@ import numpy as np
 import torch
 from PIL import Image
 
+from . import transforms as T
+
+
+def get_transform(train):
+    transforms = []
+    transforms.append(T.PILToTensor())
+    if train:
+        transforms.append(T.RandomHorizontalFlip(0.5))
+    return T.Compose(transforms)
 
 class CustomizedDataset(torch.utils.data.Dataset):
     def __init__(self, root, transforms=None):
@@ -46,7 +55,7 @@ class CustomizedDataset(torch.utils.data.Dataset):
 
         if self.transforms is not None:
             img, target = self.transforms(img, target)
-        
+
         return img, target
 
     def __len__(self):
