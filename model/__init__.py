@@ -1,3 +1,6 @@
 from .model import *
+from .train import *
+from .load_data import *
 
-__all__ = ['init_model', 'prepare_training', 'train']
+
+__all__ = ['init_model', 'prepare_training', 'train', 'load_data']
