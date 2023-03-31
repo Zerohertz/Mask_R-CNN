@@ -29,3 +29,4 @@ def train(model,
         evaluate(model, TestDataset, device=device)
         if epoch % 10 == 9:
             torch.save(model.state_dict(), './' + str(epoch + 1) + 'ep.pth')
+    torch.save(model.state_dict(), './' + str(epoch + 1) + 'ep.pth')
