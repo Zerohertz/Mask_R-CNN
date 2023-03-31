@@ -1,7 +1,7 @@
 import torch
 
-from utils import get_transform, CustomizedDataset
 from model import init_model, test
+
 
 def main():
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
@@ -18,7 +18,8 @@ def main():
     test("../data/TestData",
          "test",
          model,
-         device)
+         device,
+         {1: 'benign', 2: 'malignant'})
 
 if __name__ == "__main__":
     main()
