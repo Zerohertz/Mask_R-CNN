@@ -10,24 +10,22 @@ Type "help", "copyright", "credits" or "license" for more information.
 ```python
 >>> from utils import CustomizedDataset
 >>> c = CustomizedDataset("../data/TrainingData")
->>> c
-<utils.CustomizedDataset.CustomizedDataset object at 0x7f07e2a89210>
 >>> c[0]
-(<PIL.Image.Image image mode=RGB size=1022x767 at 0x7F07E2A89290>, {'boxes': tensor([[ 47.,   0., 634.,   0.]]), 'labels': tensor([1]), 'masks': tensor([[[0, 0, 0,  ..., 0, 0, 0],
+(<PIL.Image.Image image mode=RGB size=1022x767 at 0x7F7E7DBDB5E0>, {'boxes': tensor([[ 51.,  47., 898., 634.]]), 'labels': tensor([1]), 'masks': tensor([[[0, 0, 0,  ..., 0, 0, 0],
          [0, 0, 0,  ..., 0, 0, 0],
          [0, 0, 0,  ..., 0, 0, 0],
          ...,
          [0, 0, 0,  ..., 0, 0, 0],
          [0, 0, 0,  ..., 0, 0, 0],
-         [0, 0, 0,  ..., 0, 0, 0]]], dtype=torch.uint8), 'image_id': tensor([0]), 'area': tensor([0.]), 'iscrowd': tensor([0])})
->>> c[100]
-(<PIL.Image.Image image mode=RGB size=2816x2112 at 0x7F07E2A89410>, {'boxes': tensor([[ 359.,    0., 1661.,    0.]]), 'labels': tensor([1]), 'masks': tensor([[[0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0]]], dtype=torch.uint8), 'image_id': tensor([0]), 'area': tensor([497189.]), 'iscrowd': tensor([0])})
+>>> c[3]
+(<PIL.Image.Image image mode=RGB size=1022x767 at 0x7F7E7DBDBEB0>, {'boxes': tensor([[181.,  57., 718., 717.]]), 'labels': tensor([2]), 'masks': tensor([[[0, 0, 0,  ..., 0, 0, 0],
          [0, 0, 0,  ..., 0, 0, 0],
          [0, 0, 0,  ..., 0, 0, 0],
          ...,
          [0, 0, 0,  ..., 0, 0, 0],
          [0, 0, 0,  ..., 0, 0, 0],
-         [0, 0, 0,  ..., 0, 0, 0]]], dtype=torch.uint8), 'image_id': tensor([100]), 'area': tensor([0.]), 'iscrowd': tensor([0])})
+         [0, 0, 0,  ..., 0, 0, 0]]], dtype=torch.uint8), 'image_id': tensor([3]), 'area': tensor([354420.]), 'iscrowd': tensor([0])})
 ```
 
 ---

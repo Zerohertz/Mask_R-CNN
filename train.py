@@ -21,11 +21,10 @@ def main():
     config.update({'device': device,
                 'TrainingDataset': TrainingDataset,
                 'TestDataset': TestDataset,
-                'num_epochs': 1})
+                'num_epochs': 100})
 
     ##### Training #####
     train(model, **config)
-    torch.save(model.state_dict(), './test.pth')
 
 if __name__ == "__main__":
     main()
