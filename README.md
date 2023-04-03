@@ -83,6 +83,12 @@ if __name__ == "__main__":
 
 </details>
 
+# Make Ground Truth
+
+```shell
+Parent/Mask_R-CNN$ python makeGT.py
+```
+
 # Train
 
 ```shell
@@ -101,6 +107,25 @@ Parent/Mask_R-CNN$ python test.py --weights=${weights} --exp=${exp}
 
 + `weights`: Pretrianed weights
 + `exp`: Directory name of test results
+
+# Visualization
+
+```python
+import os
+import zerohertzPlotLib.PANPP as zpl
+
+
+tar = 'test'
+os.mkdir(tar)
+os.chdir(tar)
+
+DIR = '../../Mask_R-CNN/exp'
+Ver = ['Ground_Truth', 'Mask_R-CNN']
+
+for i in zpl.printRes(DIR + '/' + Ver[0]):
+    zpl.diffRes(DIR, i,
+            [], Ver, i)
+```
 
 ---
 
