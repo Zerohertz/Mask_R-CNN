@@ -86,14 +86,21 @@ if __name__ == "__main__":
 # Train
 
 ```shell
-Parent/Mask_R-CNN$ python train.py
+Parent/Mask_R-CNN$ python train.py --batch_size=${batch_size} --num_workers=${num_workers} --epoch=${epoch}
 ```
+
++ `batch_size`: Batch size
++ `num_workers`: Number of workers
++ `epoch`: Epoch
 
 # Test
 
 ```shell
-Parent/Mask_R-CNN$ python test.py
+Parent/Mask_R-CNN$ python test.py --weights=${weights} --exp=${exp}
 ```
+
++ `weights`: Pretrianed weights
++ `exp`: Directory name of test results
 
 ---
 
