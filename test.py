@@ -25,7 +25,7 @@ def main():
     model.eval()
 
     ##### Test #####
-    test("../data/TrainingData",
+    test("../data/TestData",
          args.exp,
          model,
          device,
