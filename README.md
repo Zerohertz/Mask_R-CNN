@@ -110,6 +110,14 @@ Parent/Mask_R-CNN$ python test.py --weights=${weights} --exp=${exp}
 
 # Visualization
 
+## TensorBoard
+
+```shell
+Parent/Mask_R-CNN$ tensorboard --logdir=runs
+```
+
+## zerohertzPlotLib
+
 ```python
 import os
 import zerohertzPlotLib.PANPP as zpl
