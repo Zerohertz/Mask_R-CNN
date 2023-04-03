@@ -32,11 +32,12 @@ def draw_gt(CD, obj):
             img = img.numpy() * 255.0
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             color = (random.randrange(0,256),random.randrange(0,256),random.randrange(0,256))
-            thickness = 1
+            thickness = 2
             x1, y1, x2, y2 = box.astype(int)
             cv2.rectangle(img, (x1, y1), (x2, y2), color, thickness)
             label_text = f"{label}"
-            cv2.putText(img, label_text, (x1, y1-5), cv2.FONT_HERSHEY_TRIPLEX, 0.5, color, thickness)
+            cv2.putText(img, label_text, (x1, y1+50), cv2.FONT_HERSHEY_TRIPLEX, 2, (0,0,0), 5)
+            cv2.putText(img, label_text, (x1, y1+50), cv2.FONT_HERSHEY_TRIPLEX, 2, color, thickness)
             mask = (mask > 0.5)
             masked_img = cv2.bitwise_and(img, img, mask=mask.astype(np.uint8))
             no_masked_img = cv2.bitwise_and(img, img, mask=255-mask.astype(np.uint8))
@@ -68,11 +69,12 @@ def draw_res(img_path, img_f, tar_path, output, obj={}):
         except:
             label = 'Unknown: ' + str(label)
         color = (random.randrange(0,256),random.randrange(0,256),random.randrange(0,256))
-        thickness = 1
+        thickness = 2
         x1, y1, x2, y2 = box.astype(int)
         cv2.rectangle(img, (x1, y1), (x2, y2), color, thickness)
         label_text = f"{label}: {score:.2f}"
-        cv2.putText(img, label_text, (x1, y1-5), cv2.FONT_HERSHEY_TRIPLEX, 0.5, color, thickness)
+        cv2.putText(img, label_text, (x1, y1+50), cv2.FONT_HERSHEY_TRIPLEX, 2, (0,0,0), 5)
+        cv2.putText(img, label_text, (x1, y1+50), cv2.FONT_HERSHEY_TRIPLEX, 2, color, thickness)
         mask = (mask > 0.5)
         masked_img = cv2.bitwise_and(img, img, mask=mask[0].astype(np.uint8))
         no_masked_img = cv2.bitwise_and(img, img, mask=255-mask[0].astype(np.uint8))
