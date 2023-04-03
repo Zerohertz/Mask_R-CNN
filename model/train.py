@@ -1,4 +1,5 @@
 import torch
+from torch.utils.tensorboard import SummaryWriter
 
 from tqdm import tqdm
 
@@ -23,8 +24,13 @@ def train(model,
         TrainingDataset,
         TestDataset,
         num_epochs=2):
+    writer = SummaryWriter()
     for epoch in tqdm(range(num_epochs)):
-        train_one_epoch(model, optimizer, TrainingDataset, device, epoch, print_freq=10)
+        lr, loss_dict, loss = train_one_epoch(model, optimizer, TrainingDataset, device, epoch, print_freq=10)
+        writer.add_scalar('lr', lr, epoch)
+        for k in loss_dict:
+            writer.add_scalar(k, loss_dict[k], epoch)
+        writer.add_scalar('loss', loss, epoch)
         lr_scheduler.step()
         evaluate(model, TestDataset, device=device)
         if epoch % 10 == 9:
