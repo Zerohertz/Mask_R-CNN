@@ -73,7 +73,7 @@ def load_data(TrainingDir, TestDir, batch_size=8, num_workers=16):
         collate_fn=utils.collate_fn)
 
     TestDataset = torch.utils.data.DataLoader(
-        TestDataset, batch_size=batch_size, shuffle=False, num_workers=num_workers,
+        TestDataset, batch_size=batch_size//2, shuffle=False, num_workers=num_workers//2,
         collate_fn=utils.collate_fn)
 
     return TrainingDataset, TestDataset
