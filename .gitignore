@@ -8,3 +8,5 @@ pycocotools
 *_ext*
 .ipynb_checkpoints
 *.sh
+exp
+runs
