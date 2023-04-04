@@ -135,7 +135,7 @@ for i in zpl.printRes(DIR + '/' + Ver[0]):
             [], Ver, i)
 ```
 
-![Results](https://user-images.githubusercontent.com/42334717/229412537-37a3b7cf-cdb4-4b29-a68e-a5ddd55c2fe7.png)
+![Results](https://user-images.githubusercontent.com/42334717/229707640-2eb5c8ba-b6f3-4ad0-a2a2-457d9e7b5eaa.png)
 
 ---
 
