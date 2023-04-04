@@ -6,3 +6,5 @@ logs/
 *.o
 pycocotools
 *_ext*
+.ipynb_checkpoints
+*.sh
