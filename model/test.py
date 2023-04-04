@@ -1,6 +1,7 @@
 import os
 import shutil
 import random
+import csv
 
 import numpy as np
 
@@ -9,6 +10,8 @@ import cv2
 
 from tqdm import tqdm
 
+from utils import utils
+from utils.engine import evaluate
 from .load_data import get_transform, CustomizedDataset
 
 
@@ -126,3 +129,12 @@ def test(TestDataset_path, tar_path, model, device, obj={}):
                      tar_path,
                      output,
                      obj)
+    TestDataset = torch.utils.data.DataLoader(
+        TestDataset, batch_size=8, shuffle=False, num_workers=16,
+        collate_fn=utils.collate_fn)
+    CocoEvaluator = evaluate(model, TestDataset, device=device)
+    res = get_results(CocoEvaluator)
+    with open('./exp/' + tar_path + '/res.csv', 'a', encoding='utf-8') as f:
+        wr = csv.writer(f)
+        for i, j in res:
+            wr.writerow([i, j])
