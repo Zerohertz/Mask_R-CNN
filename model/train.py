@@ -4,6 +4,7 @@ from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
 from utils.engine import train_one_epoch, evaluate
+from .test import get_results
 
 
 def prepare_training(model):
@@ -13,8 +14,8 @@ def prepare_training(model):
                                 momentum=0.9,
                                 weight_decay=0.0005)
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
-                                                    step_size=3,
-                                                    gamma=0.1)
+                                                    step_size=30,
+                                                    gamma=0.5)
     return {'optimizer': optimizer, 'lr_scheduler': lr_scheduler}
 
 def train(model,
@@ -32,7 +33,10 @@ def train(model,
             writer.add_scalar(k, loss_dict[k], epoch)
         writer.add_scalar('loss', loss, epoch)
         lr_scheduler.step()
-        evaluate(model, TestDataset, device=device)
-        if epoch % 10 == 9:
+        CocoEvaluator = evaluate(model, TestDataset, device=device)
+        res = get_results(CocoEvaluator)
+        for i, j in res:
+            writer.add_scalar(i, j, epoch)
+        if epoch % 20 == 9:
             torch.save(model.state_dict(), './' + str(epoch + 1) + 'ep.pth')
     torch.save(model.state_dict(), './' + str(epoch + 1) + 'ep.pth')

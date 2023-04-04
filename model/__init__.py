@@ -4,4 +4,4 @@ from .load_data import *
 from .test import *
 
 
-__all__ = ['init_model', 'prepare_training', 'train', 'load_data', 'draw_gt', 'draw_res', 'test']
+__all__ = ['init_model', 'prepare_training', 'train', 'load_data', 'draw_gt', 'get_results', 'draw_res', 'test']
