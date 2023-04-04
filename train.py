@@ -2,7 +2,7 @@ import argparse
 
 import torch
 
-from model import *
+from model import init_model, prepare_training, load_data, train
 
 
 def opts():

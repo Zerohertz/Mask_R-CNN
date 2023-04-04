@@ -1,5 +1,4 @@
-from utils import get_transform, CustomizedDataset
-from model import draw_gt
+from model import get_transform, CustomizedDataset, draw_gt
 
 
 if __name__ == "__main__":

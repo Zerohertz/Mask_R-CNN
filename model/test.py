@@ -1,15 +1,19 @@
 import os
 import shutil
 import random
+import csv
 
 import numpy as np
 
 import torch
+from torchvision.ops import nms
 import cv2
 
 from tqdm import tqdm
 
-from utils import get_transform, CustomizedDataset
+from utils import utils
+from utils.engine import evaluate
+from .load_data import get_transform, CustomizedDataset
 
 
 def draw_gt(CD, obj):
@@ -73,11 +77,12 @@ def get_results(CocoEvaluator):
     return res
 
 def init_output(output):
+    idx = nms(output[0]['boxes'], output[0]['scores'], 0.2)
     boxes = output[0]['boxes'].cpu().detach().numpy()
     scores = output[0]['scores'].cpu().detach().numpy()
     labels = output[0]['labels'].cpu().detach().numpy()
     masks = output[0]['masks'].cpu().detach().numpy()
-    return boxes, scores, labels, masks
+    return idx, boxes, scores, labels, masks
 
 def draw_res(img_path, img_f, tar_path, output, obj={}):
     '''
@@ -85,10 +90,11 @@ def draw_res(img_path, img_f, tar_path, output, obj={}):
     output: Output of Mask R-CNN (Input: Target Image)
     obj: Actual Label According to Model Label in Dictionary
     '''
-    boxes, scores, labels, masks = init_output(output)
+    idx, boxes, scores, labels, masks = init_output(output)
     img = cv2.imread(img_path + img_f)
     img = np.array(img)
-    for box, mask, score, label in zip(boxes, masks, scores, labels):
+    for i in idx:
+        box, mask, score, label = boxes[i], masks[i], scores[i], labels[i]
         if score < 0.5:
             continue
         try:
@@ -126,3 +132,12 @@ def test(TestDataset_path, tar_path, model, device, obj={}):
                      tar_path,
                      output,
                      obj)
+    TestDataset = torch.utils.data.DataLoader(
+        TestDataset, batch_size=8, shuffle=False, num_workers=16,
+        collate_fn=utils.collate_fn)
+    CocoEvaluator = evaluate(model, TestDataset, device=device)
+    res = get_results(CocoEvaluator)
+    with open('./exp/' + tar_path + '/res.csv', 'a', encoding='utf-8') as f:
+        wr = csv.writer(f)
+        for i, j in res:
+            wr.writerow([i, j])
