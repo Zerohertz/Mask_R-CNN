@@ -45,6 +45,33 @@ def draw_gt(CD, obj):
             img = cv2.addWeighted(masked_img, 0.5, no_masked_img, 1, 0)
         cv2.imwrite('exp/Ground_Truth/' + CD.imgs[i], img)
 
+def get_results(CocoEvaluator):
+    '''
+    CocoEvaluator: utils.coco_eval.CocoEvaluator
+    '''
+    keys = [
+        "Precision: IoU=0.50:0.95/area=all/maxDets=100",
+        "Precision: IoU=0.50/area=all/maxDets=100",
+        "Precision: IoU=0.75/area=all/maxDets=100",
+        "Precision: IoU=0.50:0.95/area=small/maxDets=100",
+        "Precision: IoU=0.50:0.95/area=medium/maxDets=100",
+        "Precision: IoU=0.50:0.95/area=large/maxDets=100",
+        "Recall: IoU=0.50:0.95/area=all/maxDets=1",
+        "Recall: IoU=0.50:0.95/area=all/maxDets=10",
+        "Recall: IoU=0.50:0.95/area=all/maxDets=100",
+        "Recall: IoU=0.50:0.95/area=small/maxDets=100",
+        "Recall: IoU=0.50:0.95/area=medium/maxDets=100",
+        "Recall: IoU=0.50:0.95/area=large/maxDets=100"
+    ]
+    res = []
+    bbox_res = CocoEvaluator.coco_eval['bbox'].stats
+    segm_res = CocoEvaluator.coco_eval['segm'].stats
+    for i, j in zip(keys, bbox_res):
+        res.append(("Bbox - " + i, j))
+    for i, j in zip(keys, segm_res):
+        res.append(("Segm - " + i, j))
+    return res
+
 def init_output(output):
     boxes = output[0]['boxes'].cpu().detach().numpy()
     scores = output[0]['scores'].cpu().detach().numpy()
