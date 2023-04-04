@@ -9,7 +9,7 @@ import cv2
 
 from tqdm import tqdm
 
-from utils import get_transform, CustomizedDataset
+from .load_data import get_transform, CustomizedDataset
 
 
 def draw_gt(CD, obj):
