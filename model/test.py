@@ -16,7 +16,7 @@ from utils.engine import evaluate
 from .load_data import get_transform, CustomizedDataset
 
 
-def draw_gt(CD, obj):
+def draw_gt(img_path, obj):
     if not 'exp' in os.listdir():
         os.mkdir('exp')
     if not 'Ground_Truth' in os.listdir('exp'):
@@ -24,17 +24,20 @@ def draw_gt(CD, obj):
     else:
         shutil.rmtree('exp/Ground_Truth')
         os.mkdir('exp/Ground_Truth')
-    for i, tmp in enumerate(tqdm(CD)):
-        img, boxes, masks, labels = tmp[0], tmp[1]['boxes'], tmp[1]['masks'], tmp[1]['labels']
+    TestDataset = CustomizedDataset(img_path, get_transform(train=False))
+    for i, tmp in enumerate(tqdm(TestDataset)):
+        img = cv2.imread(img_path + '/images/' + TestDataset.imgs[i])
+        img = np.array(img)
+        boxes, masks, labels = tmp[1]['boxes'], tmp[1]['masks'], tmp[1]['labels']
         for box, mask, label in zip(boxes, masks, labels):
             box, mask, label = box.numpy(), mask.numpy(), int(label)
             try:
                 label = obj[label]
             except:
                 label = 'Unknown: ' + str(label)
-            img = img.permute(1,2,0)
-            img = img.numpy() * 255.0
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            # img = img.permute(1,2,0)
+            # img = img.numpy() * 255.0
+            # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             color = (random.randrange(0,256),random.randrange(0,256),random.randrange(0,256))
             thickness = 2
             x1, y1, x2, y2 = box.astype(int)
@@ -47,7 +50,7 @@ def draw_gt(CD, obj):
             no_masked_img = cv2.bitwise_and(img, img, mask=255-mask.astype(np.uint8))
             masked_img[np.where((masked_img != [0, 0, 0]).all(axis=2))] = color
             img = cv2.addWeighted(masked_img, 0.5, no_masked_img, 1, 0)
-        cv2.imwrite('exp/Ground_Truth/' + CD.imgs[i], img)
+        cv2.imwrite('exp/Ground_Truth/' + TestDataset.imgs[i], img)
 
 def get_results(CocoEvaluator):
     '''
