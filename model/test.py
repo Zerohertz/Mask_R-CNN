@@ -35,9 +35,6 @@ def draw_gt(img_path, obj):
                 label = obj[label]
             except:
                 label = 'Unknown: ' + str(label)
-            # img = img.permute(1,2,0)
-            # img = img.numpy() * 255.0
-            # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             color = (random.randrange(0,256),random.randrange(0,256),random.randrange(0,256))
             thickness = 2
             x1, y1, x2, y2 = box.astype(int)
