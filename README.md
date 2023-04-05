@@ -1,4 +1,69 @@
-# Used Data
+<div align="center">
+<img src="https://img.shields.io/badge/PyTorch == 2.0.0-EE4C2C?style=for-the-badge&logo=PyTorch&logoColor=white"/>
+</div>
+
+# Make Ground Truth
+
+```shell
+Parent/Mask_R-CNN$ python makeGT.py
+```
+
+# Train
+
+```shell
+Parent/Mask_R-CNN$ python train.py --batch_size=${batch_size} --num_workers=${num_workers} --epoch=${epoch}
+```
+
++ `batch_size`: Batch size
++ `num_workers`: Number of workers
++ `epoch`: Epoch
+
+# Test
+
+```shell
+Parent/Mask_R-CNN$ python test.py --weights=${weights} --exp=${exp}
+```
+
++ `weights`: Pretrianed weights
++ `exp`: Directory name of test results
+
+# Visualization
+
+## TensorBoard
+
+```shell
+Parent/Mask_R-CNN$ tensorboard --logdir=runs
+```
+
+## [zerohertzPlotLib](https://github.com/Zerohertz/zerohertzPlotLib)
+
+```python
+import os
+import zerohertzPlotLib.PANPP as zpl
+
+
+tar = 'test'
+os.mkdir(tar)
+os.chdir(tar)
+
+DIR = '../../Mask_R-CNN/exp'
+Ver = ['Ground_Truth', 'Mask_R-CNN']
+
+for i in zpl.printRes(DIR + '/' + Ver[0]):
+    zpl.diffRes(DIR, i,
+            [], Ver, i)
+```
+
+![Results](https://user-images.githubusercontent.com/42334717/229707640-2eb5c8ba-b6f3-4ad0-a2a2-457d9e7b5eaa.png)
+
+---
+
+<details>
+<summary>
+Used Data
+</summary>
+
+</br>
 
 > [ISIC 2016 Challenge - Task 3B: Segmented Lesion Classification](https://challenge.isic-archive.com/landing/2016/41/)
 
@@ -82,62 +147,7 @@ if __name__ == "__main__":
 ```
 
 </details>
-
-# Make Ground Truth
-
-```shell
-Parent/Mask_R-CNN$ python makeGT.py
-```
-
-# Train
-
-```shell
-Parent/Mask_R-CNN$ python train.py --batch_size=${batch_size} --num_workers=${num_workers} --epoch=${epoch}
-```
-
-+ `batch_size`: Batch size
-+ `num_workers`: Number of workers
-+ `epoch`: Epoch
-
-# Test
-
-```shell
-Parent/Mask_R-CNN$ python test.py --weights=${weights} --exp=${exp}
-```
-
-+ `weights`: Pretrianed weights
-+ `exp`: Directory name of test results
-
-# Visualization
-
-## TensorBoard
-
-```shell
-Parent/Mask_R-CNN$ tensorboard --logdir=runs
-```
-
-## [zerohertzPlotLib](https://github.com/Zerohertz/zerohertzPlotLib)
-
-```python
-import os
-import zerohertzPlotLib.PANPP as zpl
-
-
-tar = 'test'
-os.mkdir(tar)
-os.chdir(tar)
-
-DIR = '../../Mask_R-CNN/exp'
-Ver = ['Ground_Truth', 'Mask_R-CNN']
-
-for i in zpl.printRes(DIR + '/' + Ver[0]):
-    zpl.diffRes(DIR, i,
-            [], Ver, i)
-```
-
-![Results](https://user-images.githubusercontent.com/42334717/229707640-2eb5c8ba-b6f3-4ad0-a2a2-457d9e7b5eaa.png)
-
----
+</details>
 
 <details>
 <summary>
