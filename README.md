@@ -1,5 +1,8 @@
 <div align="center">
 <img src="https://img.shields.io/badge/PyTorch == 2.0.0-EE4C2C?style=for-the-badge&logo=PyTorch&logoColor=white"/>
+<a href = "https://zerohertz.github.io/implementing-mask-r-cnn-with-pytorch/">
+    <img src="https://img.shields.io/badge/Zerohertz's%20Blog-800a0a?style=for-the-badge&logo=beatsbydre&logoColor=white"/>
+</a>
 </div>
 
 # Make Ground Truth
