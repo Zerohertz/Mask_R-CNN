@@ -12,7 +12,7 @@ def prepare_training(model):
     optimizer = torch.optim.Adam(params,
                                 lr=0.001)
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
-                                                    step_size=30,
+                                                    step_size=20,
                                                     gamma=0.5)
     return {'optimizer': optimizer, 'lr_scheduler': lr_scheduler}
 
