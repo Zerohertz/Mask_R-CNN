@@ -4,6 +4,7 @@ from PIL import Image
 import numpy as np
 
 import torch
+from torchvision.transforms import Normalize
 
 from utils import utils
 from utils import transforms as T
@@ -22,6 +23,7 @@ class CustomizedDataset(torch.utils.data.Dataset):
         self.transforms = transforms
         self.imgs = list(sorted(os.listdir(os.path.join(root, "images"))))
         self.masks = list(sorted(os.listdir(os.path.join(root, "masks"))))
+        self.Normalize = Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 
     def __getitem__(self, idx):
         img_path = os.path.join(self.root, "images", self.imgs[idx])
@@ -58,6 +60,7 @@ class CustomizedDataset(torch.utils.data.Dataset):
 
         if self.transforms is not None:
             img, target = self.transforms(img, target)
+            img = self.Normalize(img)
 
         return img, target
 
